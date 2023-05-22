@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %} {% load static %}
+{% block content %}
+<div class="mt-5">
+<h2 class="text-muted">{{trader.name.title}}'s Details</h2>
+<p class="fw-bold">Balance: <span class="fw-bold text-white bg-dark px-2">${{trader.balance}}</span></p>
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Profit ($)</th>
+            <th scope="col">Loss ($)</th>
+        </tr>
+        <tbody>
+            {% for trade in trades %}
+            <tr>
+                <td>{{trade.timestamp}}</td>
+                {% if trade.profit_loss > 0 %}
+                <td class="text-white bg-success">{{trade.profit_loss}}</td>
+                <td></td>
+                </tr>
+                <tr>
+                    {% elif trade.profit_loss < 0 %}
+                    <td></td>
+                    <td class="text-white bg-danger">{{trade.profit_loss}}</td>
+                    </tr>
+                    <tr>
+                        {% else %}
+                        <td class="bg-secondary text-white">No profit</td>
+                        <td class="bg-secondary text-white">No loss</td>
+                        </tr>
+                        <tr>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+
+<div>
+    <a href="/{{ trader.id }}" class="d-flex align-items-start justify-content-start text-decoration-none text-dark fw-bold my-4" style="width: fit-content;"> see graph
+        <i class="fa fa-caret-right h4"></i>
+    </a>
+</div>
+</div>
+{% endblock content %}
