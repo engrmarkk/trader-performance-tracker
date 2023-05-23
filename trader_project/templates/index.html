@@ -26,7 +26,14 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-muted">{{trader.name.title}}'s Dashboard</h2>
-        <p class="fw-bold">Balance: <span class="fw-bold text-white bg-dark px-2">${{balance}}</span></p>
+        <div class="d-flex align-items-center">
+            <p class="fw-bold">Balance: <span class="fw-bold text-white bg-dark px-2">${{balance}}</span></p>
+            <p class="ms-auto">
+                <a href="/logout">
+                    <i class="fa fa-sign-out-alt text-danger h4"></i>
+                </a>
+            </p>
+        </div>
     
         <div id="chart"></div>
     </div>
