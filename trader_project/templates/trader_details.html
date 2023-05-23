@@ -7,38 +7,33 @@
 
 
 
-<table class="table">
+<table class="table table-hover table-bordered table-responsive">
     <thead>
         <tr>
             <th scope="col">Timestamp</th>
             <th scope="col">Profit ($)</th>
             <th scope="col">Loss ($)</th>
         </tr>
-        <tbody>
-            {% for trade in trades %}
-            <tr>
-                <td>{{trade.timestamp}}</td>
-                {% if trade.profit_loss > 0 %}
-                <td class="text-white bg-success">{{trade.profit_loss}}</td>
-                <td></td>
-                </tr>
-                <tr>
-                    {% elif trade.profit_loss < 0 %}
-                    <td></td>
-                    <td class="text-white bg-danger">{{trade.profit_loss}}</td>
-                    </tr>
-                    <tr>
-                        {% else %}
-                        <td class="bg-secondary text-white">No profit</td>
-                        <td class="bg-secondary text-white">No loss</td>
-                        </tr>
-                        <tr>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </tbody>
     </thead>
+    <tbody>
+        {% for trad, timestamp in prof_lost.items %}
+        <tr>
+            <td>{{ timestamp }}</td>
+            {% if trad > 0 %}
+            <td class="text-white bg-success">{{ trad }}</td>
+            <td></td>
+                {% elif trad < 0 %}
+                <td></td>
+                <td class="text-white bg-danger">{{ trad }}</td>
+                {% else %}
+                <td class="bg-secondary text-white">No profit</td>
+                <td class="bg-secondary text-white">No loss</td>
+                {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 
 <div>
     <a href="/{{ trader.id }}" class="d-flex align-items-start justify-content-start text-decoration-none text-dark fw-bold my-4" style="width: fit-content;"> see graph
