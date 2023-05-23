@@ -1,8 +1,10 @@
 from django.db import models
+# from djongo import models
+from django.contrib.auth.models import AbstractUser
+import random
 
 
-# Create your models here.
-class Trader(models.Model):
+class Trader(AbstractUser):
     name = models.CharField(max_length=200)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=100.00)
 
