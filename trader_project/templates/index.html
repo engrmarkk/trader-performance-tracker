@@ -36,6 +36,53 @@
         </div>
     
         <div id="chart"></div>
+
+        <!-- trader tabel -->
+        {% if not user.is_superuser %}
+        <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header d-flex justify-content-center m-auto" id="flush-headingOne">
+              <button class="accordion-button collapsed w-25 border bg-warning fw-bold h3"
+              type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" 
+              aria-expanded="false" aria-controls="flush-collapseOne">
+              Stat
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <table class="table table-hover table-bordered table-responsive m-auto">
+                  <thead>
+                      <tr>
+                          <th scope="col">Timestamp</th>
+                          <th scope="col">Profit ($)</th>
+                          <th scope="col">Loss ($)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for trad, timestamp in prof_lost.items %}
+                      <tr>
+                          <td>{{ timestamp }}</td>
+                          {% if trad > 0 %}
+                          <td class="text-white bg-success">{{ trad }}</td>
+                          <td></td>
+                              {% elif trad < 0 %}
+                              <td></td>
+                              <td class="text-white bg-danger">{{ trad }}</td>
+                              {% else %}
+                              <td class="bg-secondary text-white">No profit</td>
+                              <td class="bg-secondary text-white">No loss</td>
+                              {% endif %}
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- end of table -->
     </div>
 
     <script>
