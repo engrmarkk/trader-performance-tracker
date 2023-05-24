@@ -22,6 +22,7 @@ def home_to_create(request):
 
 @login_required(login_url='login')
 def user_dashboard(request, trader_id):
+    user_trade = {}
     if not request.user.is_authenticated:
         messages.error(request, 'You need to be logged-in')
         return redirect('login')
@@ -43,11 +44,18 @@ def user_dashboard(request, trader_id):
         yaxis=dict(title='Profit/Loss($)')
     )
     chart_data = fig.to_json()
+    for t in trades:
+        prof = float(t.profit_loss)
+        user_trade[t.timestamp] = prof
+
+    # Reverse the dictionary
+    reversed_profit_lost = {value: key for key, value in user_trade.items()}
 
     return render(request, 'index.html',
                   {'chart_data': chart_data,
                    'trader': trades[0].trader,
                    'balance': trades[0].trader.balance,
+                   'prof_lost': reversed_profit_lost
                    })
 
 
