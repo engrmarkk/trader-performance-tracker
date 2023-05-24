@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "trader_app.apps.TraderAppConfig",
+    "djongo"
+    # "trader_app.login",
 ]
+
+AUTH_USER_MODEL = "trader_app.Trader"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -70,31 +74,66 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "trader_project.wsgi.application"
 
-
+LOGIN_URL = "login"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+
+
 
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "djongo",
-#         "CLIENT": {
-#             "host": "mongodb+srv://engrmark:<engrmark>@cluster0.jl1bbce.mongodb.net/?retryWrites=true&w=majority",
-#             "name": "engrmark",
-#             "username": "engrmark",
-#             "password": "engrmark",
-#             "enforceSchema": "false",
-#             "authMechanism": "SCRAM-SHA-1",
-#         },
+#         "NAME": "new_db",
 #     }
 # }
 
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+my_username = os.getenv("USERNAME")
+my_password = os.getenv("PASSWORD")
+source = os.getenv("SOURCE")
+host = os.getenv("HOST")
+
+DATABASES = {
+    "default": {
+        "ENGINE": "djongo",
+        "NAME": "newdb",
+        # "enforce_schema": False,  # Corrected key to lowercase
+        # "CLIENT": {
+        #     "host": f"{host}",
+        #     "username": f"{my_username}",
+        #     "password": f"{my_password}",
+        #     "authSource": f"{source}",
+        #     "authMechanism": "SCRAM-SHA-1",
+        # },
+        # "LOGGING": {
+        #     "version": 1,
+        #     "loggers": {
+        #         "djongo": {
+        #             "level": "DEBUG",
+        #             "propagate": False,
+        #         }
+        #     }
+        # },
+    }
+}
+
+MIGRATION_MODULES = {
+    'auth': None,  # Exclude auth app from migrations
+}
 
 
 # Password validation
