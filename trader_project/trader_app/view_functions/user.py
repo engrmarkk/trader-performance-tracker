@@ -75,7 +75,7 @@ def trader_details(request, trader_id):
         return HttpResponseNotFound('<h1>No details yet</h1>')
     for t in trade:
         prof = float(t.profit_loss)
-        trader_profit_lost[t.timestamp.isoformat()] = prof
+        trader_profit_lost[t.timestamp] = prof
 
     # Reverse the dictionary
     reversed_profit_lost = {value: key for key, value in trader_profit_lost.items()}
